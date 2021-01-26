@@ -1,127 +1,109 @@
-package com.day0.addressbook;
+package com.uccases;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map.Entry;
 import java.util.Scanner;
 
+
 class Contacts {
-	String firstName, lastName, address, city, state;
-	long zip, phoneNumber;
+    String firstName;
+    String lastName;
+    String address;
+    String city;
+    String state;
+    long zip;
+    long phoneNumber;
 
-	public Contacts(String firstName, String lastName, String address, String city, String state, long zip,
-			long phoneNumber) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.address = address;
-		this.city = city;
-		this.state = state;
-		this.zip = zip;
-		this.phoneNumber = phoneNumber;
-	}
+    public Contacts(String firstName, String lastName, String address, String city, String state, long zip,
+                    long phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.phoneNumber = phoneNumber;
+    }
 
-	@Override
-	public String toString() {
-		return "Contacts [firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", city=" + city
-				+ ", state=" + state + ", zip=" + zip + ", phoneNumber=" + phoneNumber + "]";
-	}
+    public long getZip() {
+        return zip;
+    }
 
+    @Override
+    public String toString() {
+        return "Contacts{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zip=" + zip +
+                ", phoneNumber=" + phoneNumber +
+                '}';
+    }
 }
 
-//main class
 public class AddressBook {
-	// main method
-	static ArrayList<Contacts> arraylist = new ArrayList<>();
-	static Scanner input = new Scanner(System.in);
-	static HashMap<String, Contacts> hashmap = new HashMap<String, Contacts>();
 
-	public static void main(String[] args) {
-		System.out.println("Welcome to AddressBook");
-		while (true) {
-			System.out.println("choose the operation which u want to perform");
-			System.out.println("1.ADD");
-			System.out.println("2.EDIT");
-			System.out.println("3.DELETE");
-			int num = input.nextInt();
-			switch (num) {
-			case 1:
-				add();
-				break;
-			case 2:
-				edit();
-				break;
-			case 3:
-				delete();
-				break;
-			default:
-				System.out.println("Invalid");
-			}
-			System.out.println("Do youwant to perform any other operations: press(1?0)");
-			System.out.println("1 for stop");
-			int number = input.nextInt();
-			if (number == 1)
-				break;
-		}
-		for (Entry<String, Contacts> entry : hashmap.entrySet()) {
-		      System.out.println(entry);
-		      
-		    }
-	}
+    public static void main(String[] args) {
+        System.out.println("Welcome to AddressBook");
+        ArrayList<Contacts> book = new ArrayList<>();
 
-	public static void add() {
-		while(true) {
-		System.out.println("enter firstname");
-		String firstName = input.next();
-		if(hashmap.containsKey(firstName)) {
-			System.out.println("Already sameName is present in the entries");
-			System.out.println("you're tried to add duplicate entry");
-			break;
-		}
-		System.out.println("enter lastname");
-		String lastName = input.next();
-		System.out.println("enter address");
-		String address = input.next();
-		System.out.println("enter city");
-		String city = input.next();
-		System.out.println("enter state");
-		String state = input.next();
-		System.out.println("enter zip");
-		long zip = input.nextLong();
-		System.out.println("enter phone number");
-		long phoneNumber = input.nextLong();
-        hashmap.put(firstName, new Contacts(firstName, lastName, address, city, state, zip, phoneNumber));
-        System.out.println("if u want to add more");
-        System.out.println("press 1 for no and 2 for add");
-		int more = input.nextInt();
-		if (more == 1)
-			break;
-		}
-		}
+        book.add(new Contacts("Aanchal", "Thakur", " address", "GS",
+                "tamilnadu", 607003, 9424864293));
+        book.add(new Contacts("payal", "Singh", " address", "mumbai",
+                "maharastra", 607007, 933445565l));
+        book.add(new Contacts("Rajendra", "Ji", " address", "bangalore",
+                "karnataka", 607403, 9488806205l));
+        book.add(new Contacts("yash", "raj", " address", "chennai",
+                "maharastra", 607083, 923446205l));
+        book.add(new Contacts("bhums", "suyavanshi", " address", "kolkata",
+                "west bengal", 607903, 9445620555));
 
-	public static void edit() {
-		System.out.println("ENTER THE FIRSTNAME WHICH YOU WANT TO EDIT");
-		System.out.println("enter firstname");
-		String firstName = input.next();
-		System.out.println("enter lastname");
-		String lastName = input.next();
-		System.out.println("enter address");
-		String address = input.next();
-		System.out.println("enter city");
-		String city = input.next();
-		System.out.println("enter state");
-		String state = input.next();
-		System.out.println("enter zip");
-		long zip = input.nextLong();
-		System.out.println("enter phone number");
-		long phoneNumber = input.nextLong();
-		hashmap.replace(firstName, new Contacts(firstName, lastName, address, city, state, zip, phoneNumber));
+        Scanner input = new Scanner(System.in);
+        String check = "y";
 
-	}
+        while (!check.equalsIgnoreCase("n")) {
+            System.out.println("Enter the Operation you want to perform");
+            System.out.println("1.Add \n 2.Edit \n 3.Delete \n 4.Search \n 5.view \n 6.count \n 7.SortbyName " +
+                    "8.SortbyCity \n 9.SortbyState \n 10.SortbyState");
+            int option = input.nextInt();
+            switch (option) {
+                case 1:
+                    AddressBookOperations.add(book);
+                    break;
+                case 2:
+                    AddressBookOperations.edit(book);
+                    break;
+                case 3:
+                    AddressBookOperations.delete(book);
+                    break;
+                case 4:
+                    AddressBookOperations.search(input, book);
+                    break;
+                case 5:
+                    AddressBookOperations.viewByCityorState(input, book);
+                    break;
+                case 6:
+                    AddressBookOperations.countByCityorState(input, book);
+                    break;
+                case 7:
+                    AddressBookOperations.sortByFirstName(book);
+                    break;
+                case 8:
+                    AddressBookOperations.sortByCity(book);
+                    break;
+                case 9:
+                    AddressBookOperations.sortByState(book);
+                    break;
+                case 10:
+                    AddressBookOperations.sortByzip(book);
+                    break;
+            }
+            System.out.println("Do you want to perform any other option ?press(y/n)");
+            check = input.next();
+        }
+        book.stream().forEach(n -> System.out.println(n));
+    }
 
-	public static void delete() {
-		System.out.println("enter the firstname to delete");
-		String firstName = input.next();
-		hashmap.remove(firstName);
-	}
 
 }
